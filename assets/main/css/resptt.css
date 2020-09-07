@@ -1,0 +1,144 @@
+/* Main Stylesheets's */
+
+*, *::before, *::after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    position: relative;
+    margin: 0 auto 0 auto;
+    width: 100%;
+    max-width: 1270px;
+}
+
+.navbar {
+    position: relative;
+    width: 100%;
+    background-color: #195a70;
+    padding: 15px 0 15px 0;
+}
+
+.navbar-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-wrapper__item {
+    width: 100%;
+}
+
+.navbar-list {
+    position: relative;
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.navbar-wrapper div.navbar-wrapper__item:last-child ul.navbar-list {
+    float: right;
+}
+
+.navbar-list__item {
+    position: relative;
+    padding: 0 15px 0 15px;
+    color: #fff;
+}
+
+.navbar-list__item a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar-logo img {
+    width: 50px;
+    vertical-align: middle;
+}
+
+/* If auth */
+
+.navbar-list__item-userpick {
+    padding: 0 0 0 30px;
+}
+
+.navbar-list__item-userpick img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+    vertical-align: middle;
+}
+
+.list-item__dropdown-info {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-info__list {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    background-color: red;
+    width: 100%;
+    height: auto;
+}
+
+.list-item__dropdown-info:hover .dropdown-info__list {
+    display: block;
+}
+
+/* Lobby */
+
+section.lobby {
+    padding: 50px 0 0 0;
+}
+
+.lobby-wrapper {
+    display: flex;
+}
+
+.lobby-wrapper div.lobby-wrapper__item:last-child {
+    width: 50%;
+}
+
+.lobby-wrapper__item {
+    position: relative;
+    width: 100%;
+    padding: 0 50px 0 50px;
+}
+
+.lobby-card {
+    position: relative;
+    width: 100%;
+    background-color: #459991;
+    border-radius: 10px;
+}
+
+.lobby-card__title {
+    position: relative;
+    padding: 20px;
+}
+
+.lobby-card__content {
+    position: relative;
+}
+
+.lobby-card__footer {
+    position: relative;
+    text-align: center;
+    padding: 20px;
+}
+
+.card-footer__setting {
+    position: absolute;
+    right: 25px;
+}
+
+.card-title__create-lobby {
+    position: absolute;
+    right: 25px;
+}

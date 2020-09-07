@@ -1,0 +1,9 @@
+﻿Options -Indexes
+
+RewriteEngine On
+RewriteBase /
+
+ErrorDocument 404 /kernel/pages/errors/404.php
+ErrorDocument 403 /kernel/pages/errors/403.php
+ErrorDocument 401 /kernel/pages/errors/401.php
+ErrorDocument 500 /kernel/pages/errors/500.php
