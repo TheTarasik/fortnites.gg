@@ -97,7 +97,6 @@ if ($select_isset_data == 0) {
 
 
 
-
 if (isset($_POST['left-room'])) {
     $get_result_search_user = mysqli_num_rows($get_info_room);
     if ($get_result_search_user == 1) {
