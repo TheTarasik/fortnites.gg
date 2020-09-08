@@ -20,7 +20,7 @@ if (!(isset($_SESSION['logged']))) {
 }
 
 ?>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
 <section class="lobby">
     <div class="container">
         <div class="lobby-wrapper">
@@ -60,12 +60,45 @@ if (!(isset($_SESSION['logged']))) {
                             <td>' . $bet_room_list . '</td>      
                             <td>' . $owner_name . '</td>
                             <th>' . $match_descr . '</th>
-                            <td><a href="room.php?id=' . $id_room_list . '">Войти</a></td>   
+                           <!--<td><a href="room.php?id=' . $id_room_list . '" id="join_room">Войти</a></td> -->
+                            <td><a id="join_room">Войти</a></td> 
+                          
                         </tr>
                         ';
                             }
                             ?>
                         </table>
+                        <script>
+                            //var id_room = '<?// echo $id_room_list ?>//',
+                            //    id = '<?// echo $id ?>//';
+                            //$('#join_room').on('click', function () {
+                            //        $.post( "http://fortnite.gg/kernel/ajax/room_join.php", {id_room:id_room, id:id});
+                            //});
+
+                            $('#join_room').on('click', function () {
+                                    var id_room = '<? echo $id_room_list ?>',
+                                id = '<? echo $id ?>';
+
+                            $.ajax({
+                                type: 'POST',
+                                url: "http://fortnite.gg/kernel/ajax/room_join.php",
+                                data: {id_room:id_room, id:id},
+                                success: function (result) {
+                                    if (result == 1) {
+                                        document.location.href = '/game/lobby.php';
+                                        console.log(result);
+                                        $('#join_room').css('cursor', 'not-allowed');
+                                    }
+
+                                    if (result == 0) {
+                                        document.location.href = '/game/room.php?id=' + id_room;
+                                        console.log(result);
+                                    }
+                                }
+                            });
+                            });
+
+                        </script>
                         <br><br><br>
                         <form method="POST">
                         <input type="radio" class="bet" name="bet" value="0">
@@ -181,13 +214,15 @@ if (!(isset($_SESSION['logged']))) {
                                     if (isset($_POST['bet-custom__radio'])) {
                                         $_POST['bet'] = $_POST['bet-custom__input'];
                                     }
+
                                     $create_room = mysqli_query($connect, "INSERT INTO `rooms` (`id_room`, `id`, `bet`, `duration`, `id_match`, `hash`) VALUE (NULL, '" . $id . "', '" . $_POST['bet'] . "', '" . $_POST['duration'] . "', '" . $_POST['type_match'] . "', '" . $hash_match . "')");
                                     $get_match_id = mysqli_query($connect, "SELECT * FROM `rooms` WHERE `hash`='" . $hash_match . "'");
                                     while ($get_match_id_results = mysqli_fetch_assoc($get_match_id)) {
                                         $id_room = $get_match_id_results['id_room'];
                                     }
+                                    $insert_joiner = mysqli_query($connect, "INSERT INTO `joiner` (`id_room`, `id`) VALUES ('" . $id_room . "', '" . $id . "')");
                                     header('Location: /game/room.php?id=' . $id_room . '');
-                                }
+                                } // HASH ISSET
 
                             } else {
                                 echo array_shift($errors);
