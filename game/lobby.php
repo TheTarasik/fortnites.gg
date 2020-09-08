@@ -19,6 +19,16 @@ if (!(isset($_SESSION['logged']))) {
     }
 }
 
+$get_isset_joiner_redirect = mysqli_query($connect, "SELECT * FROM `joiner` WHERE `id`='" . $id . "'");
+while ($get_isset_joiner_redirect_result = mysqli_fetch_assoc($get_isset_joiner_redirect)) {
+    $get_joiner_room = $get_isset_joiner_redirect_result['id_room'];
+}
+$get_isset_joiner_redirect_num_result = mysqli_num_rows($get_isset_joiner_redirect);
+
+if ($get_isset_joiner_redirect_num_result == 1) {
+    header('Location: /game/room.php?id=' . $get_joiner_room  . '');
+}
+
 ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
 <section class="lobby">
@@ -61,7 +71,7 @@ if (!(isset($_SESSION['logged']))) {
                             <td>' . $owner_name . '</td>
                             <th>' . $match_descr . '</th>
                            <!--<td><a href="room.php?id=' . $id_room_list . '" id="join_room">Войти</a></td> -->
-                            <td><a id="join_room">Войти</a></td> 
+                            <td><a id=' . $id_room_list . '>Войти</a></td> 
                           
                         </tr>
                         ';
@@ -69,13 +79,7 @@ if (!(isset($_SESSION['logged']))) {
                             ?>
                         </table>
                         <script>
-                            //var id_room = '<?// echo $id_room_list ?>//',
-                            //    id = '<?// echo $id ?>//';
-                            //$('#join_room').on('click', function () {
-                            //        $.post( "http://fortnite.gg/kernel/ajax/room_join.php", {id_room:id_room, id:id});
-                            //});
-
-                            $('#join_room').on('click', function () {
+                            $('#<? echo $id_room_list ?>').on('click', function () {
                                     var id_room = '<? echo $id_room_list ?>',
                                 id = '<? echo $id ?>';
 
@@ -86,13 +90,9 @@ if (!(isset($_SESSION['logged']))) {
                                 success: function (result) {
                                     if (result == 1) {
                                         document.location.href = '/game/lobby.php';
-                                        console.log(result);
-                                        $('#join_room').css('cursor', 'not-allowed');
                                     }
-
                                     if (result == 0) {
                                         document.location.href = '/game/room.php?id=' + id_room;
-                                        console.log(result);
                                     }
                                 }
                             });
