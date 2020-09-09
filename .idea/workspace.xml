@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/game/lobby.php" line="222" mnemonic="8" />
+    <bookmark url="file://$PROJECT_DIR$/game/lobby.php" line="218" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54027e31-dc59-45c3-b75f-bbda9e4e0626" name="Default Changelist" comment="">
@@ -46,8 +46,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/lobby.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="80" column="32" selection-start-line="80" selection-start-column="32" selection-end-line="80" selection-end-column="32" />
+            <state relative-caret-position="155">
+              <caret line="87" column="38" selection-start-line="87" selection-start-column="38" selection-end-line="87" selection-end-column="82" />
             </state>
           </provider>
         </entry>
@@ -133,9 +133,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="66" />
-    <option name="y" value="81" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="87" />
+    <option name="y" value="49" />
     <option name="width" value="1198" />
     <option name="height" value="654" />
   </component>
@@ -248,18 +248,17 @@
       <workItem from="1599297983395" duration="34174000" />
       <workItem from="1599392115716" duration="18360000" />
       <workItem from="1599493624868" duration="19803000" />
-      <workItem from="1599575865108" duration="9809000" />
+      <workItem from="1599575865108" duration="10205000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141980000" />
+    <option name="totallyTimeSpent" value="142376000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
+    <frame x="87" y="49" width="1198" height="654" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13560411" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.185413" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -272,7 +271,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.18270572" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.26464647" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32914925" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -450,8 +449,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game/lobby.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="80" column="32" selection-start-line="80" selection-start-column="32" selection-end-line="80" selection-end-column="32" />
+        <state relative-caret-position="155">
+          <caret line="87" column="38" selection-start-line="87" selection-start-column="38" selection-end-line="87" selection-end-column="82" />
         </state>
       </provider>
     </entry>
