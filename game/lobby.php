@@ -8,7 +8,7 @@ if (!(isset($_SESSION['logged']))) {
     header("Location: /?page=login");
     exit;
 } else {
-    $get_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `login`='" . $login  . "'");
+    $get_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `login`='" . $login . "'");
     while ($get_user_result = mysqli_fetch_assoc($get_user)) {
         $id = $get_user_result['id'];
         $login = $get_user_result['login'];
@@ -26,7 +26,7 @@ while ($get_isset_joiner_redirect_result = mysqli_fetch_assoc($get_isset_joiner_
 $get_isset_joiner_redirect_num_result = mysqli_num_rows($get_isset_joiner_redirect);
 
 if ($get_isset_joiner_redirect_num_result == 1) {
-    header('Location: /game/room.php?id=' . $get_joiner_room  . '');
+    header('Location: /game/room.php?id=' . $get_joiner_room . '');
 }
 
 ?>
@@ -42,16 +42,12 @@ if ($get_isset_joiner_redirect_num_result == 1) {
                                 <span class="lobby-loader__spinner-title">Подключение...</span>
                             </div>
                         </div>
-                        <div class="lobby-card__title">Доступные комнаты<button class="card-title__create-lobby">Создать лобби</button></div>
+                        <div class="lobby-card__title">Доступные комнаты
+                            <button class="card-title__create-lobby">Создать лобби</button>
+                        </div>
                         <div class="lobby-card__content">
 
-                            <table cellspacing="0" style="width: 100%; text-align: center;">
-                                <tr>
-                                    <th>Ставка</th>
-                                    <th>Создатель</th>
-                                    <th>Тип игры</th>
-                                    <th></th>
-                                </tr>
+                            <table id="rooms-render" cellspacing="0" style="width: 100%; text-align: center;">
                                 <?php
                                 $room_list_result_query = mysqli_query($connect, "SELECT * FROM `rooms`");
 
@@ -70,44 +66,27 @@ if ($get_isset_joiner_redirect_num_result == 1) {
                                     while ($get_match_info_result = mysqli_fetch_assoc($get_match_info)) {
                                         $match_descr = $get_match_info_result['descr'];
                                     }
-
-                                    echo '
-                        <tr>
-                            <td>' . $bet_room_list . '</td>
-                            <td>' . $owner_name . '</td>
-                            <th>' . $match_descr . '</th>
-                            <td><a class="button button-default button-bordered button-fullwidth room-join" id=' . $id_room_list . '>Войти</a></td>
-                        </tr>
-                        ';
                                 }
                                 ?>
                             </table>
                             <script>
-                                $('.room-join').on('click', function () {
-                                    var id_room = $(this).attr("id"),
-                                        id = '<? echo $id ?>';
-                                        console.log("Connect handler start!", "id_room -", id_room, "id -", id);
-                                        $('#lobby-loader').css('display', 'block');
-                                        $(this).css('cursor', 'not-allowed');
-                                        setTimeout(function () {
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: "/kernel/ajax/room_join.php",
-                                                data: {id_room: id_room, id: id},
-                                                success: function (result) {
-                                                    if (result == 2) {
-                                                        document.location.href = '/game/lobby.php';
-                                                    }
-                                                    if (result == 1) {
-                                                            document.location.href = '/game/lobby.php';
-                                                    }
-                                                    if (result == 0) {
-                                                        document.location.href = '/game/room.php?id=' + id_room;
-                                                    }
-                                                }
-                                            });
-                                        }, 2000);
-                                });
+                                function getrooms() {
+                                    var user_id = '<? echo $id; ?>';
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "/kernel/ajax/get_rooms.php",
+                                        data: {get: 'get', user_id: user_id},
+                                        success: function (result) {
+                                            $('#rooms-render').html(result);
+                                        }
+                                    });
+                                }
+
+                                getrooms();
+                                setInterval(function () {
+                                    getrooms();
+                                }, 5000);
+
                             </script>
                             <br><br><br>
                             <form method="POST">
@@ -165,7 +144,7 @@ if ($get_isset_joiner_redirect_num_result == 1) {
                                 }
 
                                 if (!isset($_POST['bet'])) {
-                                    if(!isset($_POST['bet-custom__radio'])) {
+                                    if (!isset($_POST['bet-custom__radio'])) {
                                         $errors[] = 'Вы не указали ставку!';
                                     }
                                 }
@@ -197,18 +176,18 @@ if ($get_isset_joiner_redirect_num_result == 1) {
                                     }
                                 }
 
-                                if ($_POST['bet'] >= $max_bet+1 or $_POST['bet-custom__input'] >= $max_bet+1) {
+                                if ($_POST['bet'] >= $max_bet + 1 or $_POST['bet-custom__input'] >= $max_bet + 1) {
                                     $errors[] = 'Максимальная ставка ' . $max_bet . ' рублей';
                                 }
 
-                                if ($_POST['duration'] >= $match_duration+1) {
+                                if ($_POST['duration'] >= $match_duration + 1) {
                                     $errors[] = 'Максимальная длительность матча ' . $match_duration . ' минут';
                                 }
 
                                 if (empty($errors)) {
-                                    $hash_match = md5(rand(1000,9999).rand(1000,9999).rand(1000,9999));
+                                    $hash_match = md5(rand(1000, 9999) . rand(1000, 9999) . rand(1000, 9999));
                                     $check_hash = mysqli_query($connect, "SELECT `hash` FROM `rooms` WHERE `hash`='" . $hash_match . "'");
-                                    while($check_hash_result = mysqli_fetch_assoc($check_hash)) {
+                                    while ($check_hash_result = mysqli_fetch_assoc($check_hash)) {
                                         $checked_ray_hash = $check_hash_result['hash'];
                                     }
 
