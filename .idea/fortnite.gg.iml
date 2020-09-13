@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/cboden/ratchet" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/evenement/evenement" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/ratchet/rfc6455" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/react/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/react/dns" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/react/event-loop" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/react/promise" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/react/promise-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/react/socket" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/react/stream" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/symfony/http-foundation" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/symfony/polyfill-php70" />
+      <excludeFolder url="file://$MODULE_DIR$/socket/vendor/symfony/routing" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

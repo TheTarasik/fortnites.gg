@@ -91,6 +91,27 @@
     display: block;
 }
 
+/* Material */
+/* Button's */
+.button {
+    position: relative;
+}
+
+.button-default {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #31aadc;
+    padding: 10px 15px 10px 15px;
+}
+
+.button-bordered {
+    border-radius: 35px;
+}
+
+.button-fullwidth {
+    width: 100%;
+}
+
 /* Lobby */
 
 section.lobby {
@@ -118,27 +139,113 @@ section.lobby {
     border-radius: 10px;
 }
 
+#lobby-loader {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, .6);
+}
+
+.lobby-loader__spinner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
+.lobby-loader__spinner img {
+    width: 100px;
+}
+
+.lobby-loader__spinner-title {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
 .lobby-card__title {
-    position: relative;
-    padding: 20px;
+position: relative;
+padding: 20px;
 }
 
 .lobby-card__content {
-    position: relative;
+position: relative;
 }
 
 .lobby-card__footer {
-    position: relative;
-    text-align: center;
-    padding: 20px;
+position: relative;
+text-align: center;
+padding: 20px;
 }
 
 .card-footer__setting {
-    position: absolute;
-    right: 25px;
+position: absolute;
+right: 25px;
 }
 
 .card-title__create-lobby {
+position: absolute;
+right: 25px;
+}
+
+/* Render */
+a.room-join {
+    cursor: pointer;
+}
+
+.chat-wrapper {
+    height: 319px;
+    overflow-y: auto;
+    -ms-word-break: break-all;
+    word-break: break-all;
+}
+
+.chat-message__wrapper {
+    display: flex;
+}
+
+.chat-message__userpic img {
+    width: 36px;
+    border-radius: 50%;
+}
+
+.room-chat__footer {
+    position: relative;
+    text-align: center;
+    padding: 0;
+}
+
+.room-chat__message-send {
     position: absolute;
-    right: 25px;
+    bottom: 0;
+    right: 0;
+}
+
+.chat-height {
+    height: 361px;
+}
+
+#chat-render__text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    resize: none;
+    outline: none;
+    padding: 12px;
+    border: 2px solid #195a70;
+    border-radius: 0 0 5px 5px;
+}
+
+#char_render__submit {
+    height: 43px;
+}
+
+.test {
+    float: right;
 }

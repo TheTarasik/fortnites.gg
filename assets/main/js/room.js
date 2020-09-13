@@ -1,5 +1,4 @@
 
-
 // function refreshPage(){
 //     var login = $('#login').val();
 //     $.post( "",
