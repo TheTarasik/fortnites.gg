@@ -17,6 +17,7 @@ if (!(isset($_SESSION['logged']))) {
         $password = $get_user_result['password'];
         $user_group = $get_user_result['user_group'];
         $ip = $get_user_result['ip'];
+        $token = $get_user_result['token'];
     }
 }
 
@@ -33,7 +34,7 @@ if (preg_match('/[^,.0-9]/', $id_room)) {
 $check_isset_room_query = mysqli_query($connect, "SELECT `id_room` FROM `rooms` WHERE `id_room`='" . $id_room . "'");
 $check_isset_room = mysqli_num_rows($check_isset_room_query);
 
-if ($check_isset_room == 0) {
+if ($check_isset_room == 0) { // If room does not exist
     header('Location: /game/lobby.php');
     exit;
 }
@@ -55,13 +56,22 @@ while ($get_match_info_result = mysqli_fetch_assoc($get_match)) {
 $get_joiner_round = mysqli_query($connect, "SELECT * FROM `joiner` WHERE `id_room`='" . $id_room . "'");
 $get_joiner_round_result = mysqli_num_rows($get_joiner_round);
 
+while ($select_isset_joiner = mysqli_fetch_assoc($select_isset_data_query)) {
+    $true_room_id = $select_isset_joiner['id_room'];
+}
 
+if ($select_isset_data == 1) { // If user try connect to different room.
+    if ($id_room != $true_room_id) {
+        header('Location: /game/room.php?id=' . $true_room_id . '');
+        exit();
+    }
+}
 
-if ($select_isset_data == 0) {
+if ($select_isset_data == 0) { // If in table `joiner` not info about that user connect to room - added info.
     $insert_joiner = mysqli_query($connect, "INSERT INTO `joiner` (`id_room`, `id`) VALUES ('" . $id_room . "', '" . $id . "')");
 }
 
-if ($match_max_join < $get_joiner_round_result) {
+if ($match_max_join < $get_joiner_round_result) { // If count of user in single room more then in indicated type of match - redirect him to lobby.
     $delete_if_isset = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $id . "'");
     header('Location: /game/lobby.php');
     exit();
@@ -127,6 +137,29 @@ if (isset($_POST['left-room'])) {
         var user_id = '<? echo $id ?>';
         var connect = new WebSocket('ws://127.0.0.1:4433');
 
+        // window.onbeforeunload = function() {
+        //     return true;
+        // };
+
+        function stats() {
+            $.ajax({
+                type: 'POST',
+                url: "/kernel/ajax/stats.php",
+                data: {stats: 'stats', id: user_id},
+                success: function (result) {
+                    var data = JSON.parse(result);
+                    $.cookie('token', data.token, { expires: 1, path: '/' });
+
+                    if (data.active === 0) {
+                        document.location.href = "/game/lobby.php";
+                    }
+                }
+            });
+        }
+
+       stats();
+       setInterval(stats, 2000);
+
         connect.onopen = function (e) {
             console.log("Connection established!");
         };
@@ -140,12 +173,13 @@ if (isset($_POST['left-room'])) {
 
                 if (data.action == 'chat_sender') {
                     if (typeof (data.msg) != "undefined" && data.msg !== null) {
+                      //  $.cookie('token', data.token, { expires: 1 });
                         $('#chat-render').append(chat_render);
                         scrollchat();
                     }
                 }
 
-                if (data.action == 'leave') {
+                if (data.action == 'leave' && data.token == $.cookie('token')) {
                     if (data.user_id == user_id) {
                         document.location.href = "/game/lobby.php";
                     }
@@ -153,8 +187,13 @@ if (isset($_POST['left-room'])) {
             }
         };
 
+
+        window.addEventListener('unload', function () {
+            navigator.sendBeacon('/kernel/ajax/disconnect.php', 'entry');
+        }, false);
+
+
             connect.onclose = function (e) {
-                connect.send("Disconnect!");
             };
 
             function scrollchat() {
@@ -163,6 +202,17 @@ if (isset($_POST['left-room'])) {
                     $('#chat-render__text').val('');
                 }, 1);
                 $(".chat-wrapper").animate({scrollTop: chat_height}, 50);
+            }
+
+            function blocksendmessage() {
+                $('#chat-render__text').prop('disabled', true);
+                $('#char_render__submit').prop('disabled', true);
+                $('#chat-render__text').attr('placeholder', 'Подождите 5 секунд...');
+                setTimeout(function () {
+                    $('#chat-render__text').prop('disabled', false);
+                    $('#char_render__submit').prop('disabled', false);
+                    $('#chat-render__text').attr('placeholder', 'Напишите сообщение...');
+                }, 5000);
             }
 
             $('#chat-render__text').keyup(function () {
@@ -176,9 +226,10 @@ if (isset($_POST['left-room'])) {
             $(document).keypress(function(e) {
                 var data = {
                     room_id: room_id,
-                    user_id: <? echo $id ?>,
+                    user_id: user_id,
                     action: 'chat_sender',
-                    msg: $('#chat-render__text').val()
+                    msg: $('#chat-render__text').val(),
+                    token: $.cookie('token')
                 };
                 if (e.which == 13) {
                     if ($('#chat-render__text').val() == '') {
@@ -187,6 +238,7 @@ if (isset($_POST['left-room'])) {
                         $('#char_render__submit').prop('disabled', false);
                         connect.send(JSON.stringify(data));
                         scrollchat();
+                        blocksendmessage();
                     }
                 }
 
@@ -195,19 +247,22 @@ if (isset($_POST['left-room'])) {
             $('#char_render__submit').on('click', function () {
                 var data = {
                     room_id: room_id,
-                    user_id: <? echo $id ?>,
+                    user_id: user_id,
                     action: 'chat_sender',
-                    msg: $('#chat-render__text').val()
+                    msg: $('#chat-render__text').val(),
+                    token: $.cookie('token')
                 };
-                scrollchat();
                 connect.send(JSON.stringify(data));
+                scrollchat();
+                blocksendmessage();
             });
 
             $('.left-room').on('click', function () {
                 var data = {
                     room_id: room_id,
-                    user_id: <? echo $id ?>,
-                    action: 'leave'
+                    user_id: user_id,
+                    action: 'leave',
+                    token: $.cookie('token')
                 };
                 connect.send(JSON.stringify(data));
             });

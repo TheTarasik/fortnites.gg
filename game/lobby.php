@@ -240,3 +240,4 @@ if ($get_isset_joiner_redirect_num_result == 1) {
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/pages/core/footer.php');
 ?>
+<script src="<? echo $theme ?>/js/lobby.js"></script>

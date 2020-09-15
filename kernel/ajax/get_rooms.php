@@ -36,7 +36,6 @@ if(isset($_POST['get']) && !empty($_POST['get'])) {
 <script>
                                  $('.room-join').on('click', function () {
                                     var id_room = $(this).attr('id');
-
                                     var id = '" . $_POST['user_id'] . "';
                                         console.log('Connect handler start!', 'id_room -', id_room, 'id -', id);
                                         $('#lobby-loader').css('display', 'block');
@@ -44,7 +43,7 @@ if(isset($_POST['get']) && !empty($_POST['get'])) {
                                         setTimeout(function () {
                                             $.ajax({
                                                 type: 'POST',
-                                                url: 'http://fortnite.gg/kernel/ajax/room_join.php',
+                                                url: '/kernel/ajax/room_join.php',
                                                 data: {id_room: id_room, id: id},
                                                 success: function (result) {
                                                     if (result == 2) {
@@ -68,11 +67,4 @@ if(isset($_POST['get']) && !empty($_POST['get'])) {
                             </script>
     ";
 }
-
-
-
-
-
-
-
 ?>

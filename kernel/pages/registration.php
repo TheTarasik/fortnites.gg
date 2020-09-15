@@ -75,8 +75,10 @@ if (isset($data['registration-submit'])) {
         $_SESSION['logged'] = $login;
 
         $password_encrypt = md5(md5($password));
+        $token_generate = md5(md5(rand(1000,9999).rand(1000,9999).rand(1000,9999)));
         if ($login) {
-            $register = mysqli_query($connect, "INSERT INTO `users` (`id`, `login`, `email`, `password`, `ip`) VALUES (NULL, '" . $login . "', '" . $email . "', '" . $password_encrypt . "', '" . $ip . "')");
+            setcookie( "token", $token_generate, time()+3600, "/" );
+            $register = mysqli_query($connect, "INSERT INTO `users` (`id`, `login`, `email`, `password`, `ip`, `token`) VALUES (NULL, '" . $login . "', '" . $email . "', '" . $password_encrypt . "', '" . $ip . "', '" . $token_generate . "')");
             header('Location: /game/lobby.php');
         }
     }

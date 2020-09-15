@@ -40,6 +40,7 @@ class Chat implements MessageComponentInterface {
 
         while ($get_login_by_id_result = mysqli_fetch_assoc($get_login_by_id)) {
             $login = $get_login_by_id_result['login'];
+            $token = $get_login_by_id_result['token'];
         }
 
         $get_info_room = mysqli_query($connect, "SELECT * FROM `rooms` WHERE `id_room`='" . $data['room_id'] . "'");
@@ -47,28 +48,37 @@ class Chat implements MessageComponentInterface {
             $info_id = $get_info_room_result['id'];
         }
 
-        if(isset($data['action']) && $data['action'] == 'leave') {
-            $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $data['user_id'] . "'");
-
-            if ($data['user_id'] == $info_id) {
-                $delete_room = mysqli_query($connect, "DELETE FROM `rooms` WHERE `id`='" . $data['user_id'] . "'");
-                $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id_room`='" . $data['room_id'] . "'");
-            }
-
+        $get_info_joiner = mysqli_query($connect, "SELECT * FROM `joiner` WHERE `id`='" . $data['user_id'] . "'");
+        while ($get_info_joiner_result = mysqli_fetch_assoc($get_info_joiner)) {
+            $info_joiner_room_id = $get_info_joiner_result['id_room'];
         }
+
+        if (isset($data['token']) && $data['token'] == $token) {
+            if (isset($data['action']) && $data['action'] == 'leave') {
+                $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $data['user_id'] . "'");
+                if ($data['user_id'] == $info_id) {
+                    $delete_room = mysqli_query($connect, "DELETE FROM `rooms` WHERE `id`='" . $data['user_id'] . "'");
+                    $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id_room`='" . $data['room_id'] . "'");
+                }
+            }
+        }
+
+        $token_generate = md5(md5(rand(1000,9999).rand(1000,9999).rand(1000,9999)));
 
         $chat_sender = array(
             "room_id" => $data['room_id'],
             "login" => $login,
             "action" => $data['action'],
-            "msg" => $data['msg']
+            "msg" => $data['msg'],
+            "token" => $data['token']
         );
 
 
         $leave = array(
             "room_id" => $data['room_id'],
             "user_id" => $data['user_id'],
-            "action" => $data['action']
+            "action" => $data['action'],
+            "token" => $data['token']
         );
 
 //        $other = array(
@@ -80,26 +90,30 @@ class Chat implements MessageComponentInterface {
 
         foreach ($this->clients as $client) {
             //if ($from !== $client) {
-           // $client->send(json_encode($other));
-            if (isset($data['action'])) {
-                if ($data['action'] == 'chat_sender') {
-                    $client->send(json_encode($chat_sender));
-                }
-
-                if ($data['action'] == 'leave') {
-                    $client->send(json_encode($leave));
-                }
-            }
-         //  $client->send($msg);
-
+            // $client->send(json_encode($other));
+            // $client->send($msg);
             //}
+
+            if (isset($data['token']) && $data['token'] == $token) {
+                if ($data['room_id'] == $info_joiner_room_id) {
+                    if (isset($data['action'])) {
+                        if ($data['action'] == 'chat_sender') {
+                            $client->send(json_encode($chat_sender));
+                        }
+
+                        if ($data['action'] == 'leave') {
+                            $client->send(json_encode($leave));
+                        }
+                    }
+                    $new_token = mysqli_query($connect, "UPDATE `users` SET `token`='" . $token_generate  . "' WHERE `id`= '" . $data['user_id'] . "'");
+                } // If user send message in another room - this returns him.
+            }
         }
     }
 
     public function onClose(ConnectionInterface $conn) {
-        // The connection is closed, remove it, as we can no longer send it messages
-        $this->clients->detach($conn);
 
+        $this->clients->detach($conn);
         echo "Connection {$conn->resourceId} has disconnected\n";
     }
 
