@@ -79,10 +79,6 @@ if ($select_isset_data == 1) { // If user try connect to different room.
     }
 }
 
-//if ($select_isset_data == 0) { // If in table `joiner` not info about that user connect to room - added info.
-//    $insert_joiner = mysqli_query($connect, "INSERT INTO `joiner` (`id_room`, `id`) VALUES ('" . $id_room . "', '" . $id . "')");
-//}
-
 //echo $match_max_join;
 //echo $get_joiner_round_result;
 
@@ -178,7 +174,7 @@ if (isset($_POST['left-room'])) {
                 // Creator
 
                 if ($get_enemy_ready_status == 1) {
-                    $enemy_wait_balance = $get_enemy_money + ($bet * 2) ; // Generate new balance
+                    $enemy_wait_balance = $get_enemy_money + ($bet * 2); // Generate new balance
                     if ($money_get_status_enemy == 0) {
                         $money_get_status_update = mysqli_query($connect, "UPDATE `users` SET `money_get_status`='1' WHERE `id`='" . $get_enemy . "'");
                         $return_balance = mysqli_query($connect, "UPDATE `users` SET `money`='" . $enemy_wait_balance . "' WHERE `id`='" . $get_enemy . "'");
@@ -192,43 +188,25 @@ if (isset($_POST['left-room'])) {
 
             if ($id == $get_enemy) {
                 // Not creator
+                $get_user_money_again_query = mysqli_query($connect, "SELECT * FROM `users` WHERE `id`='" . $get_creator_of_room . "'");
+                while ($get_user_money_again_result = mysqli_fetch_assoc($get_user_money_again_query)) {
+                    $user_money_again = $get_user_money_again_result['money'];
+                }
+
+                if ($get_creator_ready_status == 1) {
+                    $wait_balance = $user_money_again + ($bet * 2); // Generate new balance
+                    if ($money_get_status == 0) {
+                        $return_balance = mysqli_query($connect, "UPDATE `users` SET `money`='" . $wait_balance . "' WHERE `id`='" . $get_creator_of_room . "'");
+                        $money_get_status_update = mysqli_query($connect, "UPDATE `users` SET `money_get_status`='1' WHERE `id`='" . $get_creator_of_room . "'");
+                    }
+                }
+
+                $delete_room = mysqli_query($connect, "DELETE FROM `rooms` WHERE `id`='" . $get_creator_of_room . "'");
                 $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $get_enemy . "'");
             }
         }
     } // get all ready status == 2
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $id . "'");
-//    if ($id == $info_id) {
-//        $delete_room = mysqli_query($connect, "DELETE FROM `rooms` WHERE `id`='" . $id . "'");
-//        $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id_room`='" . $id_room . "'");
-//    }
-//    header('Location: /game/lobby.php');
 }
 
 ?>
@@ -311,6 +289,7 @@ if (isset($_POST['left-room'])) {
     <div class="modal modal-mini">
         <div class="modal-navbar">
             <h3>Вы уверены что хотите выйти из комнаты?</h3>
+            <span id="exit-warning"></span>
         </div>
 
         <div class="modal-content">
@@ -376,6 +355,12 @@ if (isset($_POST['left-room'])) {
                             $('#timer').text(data.mini_countdown);
                         } else {
                             $('#timer').text(data.status);
+                        }
+
+                        if (data.ready_status === 'Ok') {
+                            if (data.bet !== '0') {
+                                $('#exit-warning').text('Внимание! Если вы выйдете из комнаты игра будет автоматически завершена не в вашу пользу, и все деньги перейдут другому игроку!');
+                            }
                         }
 
                         $('#users-render').html(JSON.parse(data.joiner_render));

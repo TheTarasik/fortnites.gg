@@ -209,6 +209,20 @@ class Chat implements MessageComponentInterface {
 
                         if ($data['user_id'] == $get_enemy) {
                             // Not creator
+                            $get_user_money_again_query = mysqli_query($connect, "SELECT * FROM `users` WHERE `id`='" . $get_creator_of_room . "'");
+                            while ($get_user_money_again_result = mysqli_fetch_assoc($get_user_money_again_query)) {
+                                $user_money_again = $get_user_money_again_result['money'];
+                            }
+
+                            if ($get_creator_ready_status == 1) {
+                                $wait_balance = $user_money_again + ($bet * 2); // Generate new balance
+                                if ($money_get_status == 0) {
+                                    $return_balance = mysqli_query($connect, "UPDATE `users` SET `money`='" . $wait_balance . "' WHERE `id`='" . $get_creator_of_room . "'");
+                                    $money_get_status_update = mysqli_query($connect, "UPDATE `users` SET `money_get_status`='1' WHERE `id`='" . $get_creator_of_room . "'");
+                                }
+                            }
+
+                            $delete_room = mysqli_query($connect, "DELETE FROM `rooms` WHERE `id`='" . $get_creator_of_room . "'");
                             $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $get_enemy . "'");
                         }
                     }
