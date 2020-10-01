@@ -1,7 +1,6 @@
 <?php
 $title = 'Profile';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/pages/core/header.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/data/dbconfig.php');
 
 if (!(isset($_SESSION['logged']))) {
     header("Location: /?page=login");

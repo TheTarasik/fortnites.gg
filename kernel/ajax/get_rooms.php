@@ -1,6 +1,29 @@
 <?php
 if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest' || strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']) < 1) die ();
+
+function reset_url($url) {
+    $value = str_replace ( "http://", "", $url );
+    $value = str_replace ( "https://", "", $value );
+    $value = str_replace ( "www.", "", $value );
+    $value = explode ( "/", $value );
+    $value = reset ( $value );
+    return $value;
+}
+$_SERVER['HTTP_REFERER'] = reset_url ( $_SERVER['HTTP_REFERER'] );
+$_SERVER['HTTP_HOST'] = reset_url ( $_SERVER['HTTP_HOST'] );
+
+if ($_SERVER['HTTP_HOST'] != $_SERVER['HTTP_REFERER']) {
+    @header ( 'Location: /');
+    die();
+}
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/data/dbconfig.php');
+
+function protectsqlinj($connect, $value) {
+    return mysqli_real_escape_string($connect, $value);
+}
+
+$_POST['user_id'] = protectsqlinj($connect, $_POST['user_id']);
 
 if(isset($_POST['get']) && !empty($_POST['get'])) {
 
@@ -23,10 +46,15 @@ if(isset($_POST['get']) && !empty($_POST['get'])) {
         while ($get_login_by_id_result = mysqli_fetch_assoc($get_login_by_id)) {
             $login = $get_login_by_id_result['login'];
         }
+
+        $get_match = mysqli_query($connect, "SELECT * FROM `type_match` WHERE `id_match`='" . $id_match . "'");
+        while ($get_match_info_result = mysqli_fetch_assoc($get_match)) {
+            $match_descr = $get_match_info_result['descr'];
+        }
         echo '<tr>
            <td>' . $bet . '</td>
             <td>' . $login . '</td>
-            <th>' . $id_match . '</th>
+            <th>' . $match_descr . '</th>
             <td><a class="button button-default button-bordered button-fullwidth room-join" id="' . $id_room . '">Войти</a></td>
          </tr>';
 
@@ -44,8 +72,14 @@ if(isset($_POST['get']) && !empty($_POST['get'])) {
                                             $.ajax({
                                                 type: 'POST',
                                                 url: '/kernel/ajax/room_join.php',
-                                                data: {id_room: id_room, id: id},
+                                                data: {id_room: id_room, id: id, token: $.cookie('token')},
                                                 success: function (result) {
+                                                    if (result == 3) {
+                                                        $('#message').append(`<div class='message-timeout'>Не достаточно средств!</div>`);
+                                                        $('.message-timeout').addClass('error');
+                                                        $('#lobby-loader').css('display', 'none');
+                                                        $('.room-join').css('cursor', 'pointer');
+                                                    }
                                                     if (result == 2) {
                                                         document.location.href = '/game/lobby.php';
                                                     }

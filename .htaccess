@@ -3,7 +3,16 @@
 RewriteEngine On
 RewriteBase /
 
+RewriteCond %{HTTPS} =off 
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+
 ErrorDocument 404 /kernel/pages/errors/404.php
 ErrorDocument 403 /kernel/pages/errors/403.php
 ErrorDocument 401 /kernel/pages/errors/401.php
 ErrorDocument 500 /kernel/pages/errors/500.php
+
+Options +FollowSymLinks
+RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ /?page=home [F,L]

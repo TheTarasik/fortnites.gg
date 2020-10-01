@@ -1,14 +1,26 @@
 $(document).ready(function () {
+    // Message
 
-    $('.bet').change(function(){
-        $('#bet-custom').prop("checked", false);
-        $('.bet').prop("checked", false);
-        $(this).prop("checked", true);
+
+    // Modal
+    $('.modal-show').on('click', function () {
+        var modal_get = $(this).attr('id');
+        $('.modal-wrapper' + '.' + modal_get).addClass('active');
     });
 
-    $('#bet-customs, #bet-custom__input').click(function(){
-        $('#bet-custom').prop("checked", true);
-        $('.bet').prop("checked", false);
+    $('.modal-close').on('click', function () {
+        var modal_get = $(this).attr('id');
+        $('.modal-wrapper' + '.' + modal_get).removeClass('active');
+    });
+
+    $('.modal-shadow').on('click', function () {
+        var modal_get = $(this).attr('id');
+        $('.modal-wrapper' + '.' + modal_get).removeClass('active');
+    });
+
+    // For accept-ready
+    $('#accept-ready').on('click', function () {
+        $('.modal-wrapper.ready').removeClass('active');
     });
 
 });

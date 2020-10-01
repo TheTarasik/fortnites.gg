@@ -1,6 +1,16 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/data/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/data/dbconfig.php');
 $login = $_SESSION['logged'];
+
+    // Get user money
+    $get_money = mysqli_query($connect, "SELECT `money` FROM `users` WHERE `login`='" . $login . "'");
+    while ($get_money_result = mysqli_fetch_assoc($get_money)) {
+        $user_money = $get_money_result['money'];
+    }
+
+$token_generate = md5(md5(rand(1000,9999).rand(1000,9999).rand(1000,9999)));
+setcookie("XSRF_TOKEN", $token_generate, time() + 60 * 60 * 24, '/');
 ?>
 <!doctype html>
 <html lang="en">
@@ -71,6 +81,11 @@ $login = $_SESSION['logged'];
                         </div>
                     </li>
                     <li class="navbar-list__item">
+                        <span><a id="balance" href="/?page=addbalance" title="Баланс">
+                          ' . $user_money . '
+                        </a>₽</span>
+                    </li>
+                     <li class="navbar-list__item">
                         <a href="/?page=logout" title="Выход">Выход</a>
                     </li>
                         ';

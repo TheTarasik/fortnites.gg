@@ -85,6 +85,7 @@
     background-color: red;
     width: 100%;
     height: auto;
+    z-index: 1;
 }
 
 .list-item__dropdown-info:hover .dropdown-info__list {
@@ -95,12 +96,28 @@
 /* Button's */
 .button {
     position: relative;
+    cursor: pointer;
+    outline: none;
 }
 
 .button-default {
     background-color: #fff;
     color: #000;
     border: 2px solid #31aadc;
+    padding: 10px 15px 10px 15px;
+}
+
+.button-accept {
+    background-color: #38ad69;
+    color: #fff;
+    border: 2px solid transparent;
+    padding: 10px 15px 10px 15px;
+}
+
+.button-decline {
+    background-color: #df4853;
+    color: #fff;
+    border: 2px solid transparent;
     padding: 10px 15px 10px 15px;
 }
 
@@ -112,14 +129,30 @@
     width: 100%;
 }
 
+.button-m__10 {
+    margin: 10px 0 0 0;
+}
+
+.button-mb__10 {
+    margin: 0 0 10px 0;
+}
+
+.button-mb__20 {
+    margin: 10px 0 10px 0;
+}
 /* Lobby */
 
 section.lobby {
-    padding: 50px 0 0 0;
+    padding: 25px 0 0 0;
+}
+
+section.room {
+    padding: 25px 0 0 0;
 }
 
 .lobby-wrapper {
     display: flex;
+    overflow-x: hidden;
 }
 
 .lobby-wrapper div.lobby-wrapper__item:last-child {
@@ -129,7 +162,7 @@ section.lobby {
 .lobby-wrapper__item {
     position: relative;
     width: 100%;
-    padding: 0 50px 0 50px;
+    padding: 0 25px 0 25px;
 }
 
 .lobby-card {
@@ -137,6 +170,7 @@ section.lobby {
     width: 100%;
     background-color: #459991;
     border-radius: 10px;
+    margin: 25px 0 0 0;
 }
 
 #lobby-loader {
@@ -188,15 +222,98 @@ position: absolute;
 right: 25px;
 }
 
+.card-footer__date-expiry {
+    position: absolute;
+    left: 25px;
+}
+
 .card-title__create-lobby {
 position: absolute;
 right: 25px;
+}
+
+/* Room */
+/* General */
+
+#wait-spinner__wrapper {
+    display: none;
+}
+
+.wait-spinner__item {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 150px;
+    height: 150px;
+    -webkit-clip-path: polygon(100% 0, 0 0, 100% 100%);
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    background-color: #7289da;
+}
+
+.wait-spinner__item img {
+    position: absolute;
+    width: 60%;
+    right: 0;
+}
+
+/* Info about room */
+.info-room {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+}
+
+.info-room__item {
+    color: #ccc;
+    font-size: 16px;
 }
 
 /* Render */
 a.room-join {
     cursor: pointer;
 }
+
+/* Chat */
+.item-chat {
+    display: none;
+    right: -100%;
+    animation: chat-anim__backward .8s ease forwards;
+}
+
+.item-chat.active {
+    display: block;
+    animation: chat-anim__forward .8s ease forwards;
+}
+
+.item-content {
+    animation: content-anim__backward 1s ease forwards;
+}
+
+.item-content.active {
+    animation: content-anim__forward 1s ease forwards;
+}
+
+@keyframes content-anim__forward {
+    from { width: 100% }
+    to { width: 85%; }
+}
+
+@keyframes content-anim__backward {
+    from { width: 85%; }
+    to { width: 100%; }
+}
+
+@keyframes chat-anim__forward {
+    from { right: -100%; }
+    to { right: 0; }
+}
+
+@keyframes chat-anim__backward {
+    from { right: 0; }
+    to { right: -100%; }
+}
+
 
 .chat-wrapper {
     height: 319px;
@@ -247,6 +364,129 @@ a.room-join {
     height: 43px;
 }
 
-.test {
-    float: right;
+/* Joiner`s */
+img.user-render__userpick {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+/* Other */
+/* Message */
+.message-wrapper {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 250px;
+}
+
+#message {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    right: 0;
+
+}
+
+.message-timeout.error {
+    background-color: #df4853;
+    color: #fff;
+}
+
+.message-timeout.success {
+    background-color: #38ad69;
+    color: #fff;
+}
+
+.message-timeout.warning {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.message-timeout {
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    margin: 0 0 10px 0;
+    animation: message-timeout 1s ease forwards;
+    animation-delay: 2s;
+}
+
+@keyframes message-timeout {
+    from { }
+    to { margin: 0 0 10px -100%; opacity: 0; }
+}
+
+/* Modal */
+.modal-wrapper {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+.modal {
+    position: relative;
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    border-radius: 5px;
+    background-color: #fff;
+    margin: 0 auto;
+    z-index: 1;
+    animation: modal-anim__close 2s ease forwards;
+}
+
+.modal-wrapper.active {
+    display: block;
+}
+
+.modal-wrapper.active .modal {
+    animation: modal-anim__open .5s ease forwards;
+}
+
+@keyframes modal-anim__open {
+    from { top: -100%; }
+    to { top: 10%; }
+}
+
+@keyframes modal-anim__close {
+    from { top: 10%; }
+    to { top: -100%; }
+}
+
+.modal-navbar {
+    padding: 10px;
+}
+
+.modal-content {
+    padding: 0 10px 0 10px;
+}
+
+.modal-footer {
+    padding: 0 10px 10px 10px;
+}
+
+.modal-shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: rgba(000, 000, 000, .5);
+}
+
+.modal-mini {
+    max-width: 500px;
+}
+
+.modal-medium {
+    max-width: 700px;
+}
+
+.modal-large {
+    max-width: 900px;
 }

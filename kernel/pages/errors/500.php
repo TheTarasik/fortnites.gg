@@ -1,5 +1,4 @@
 <?php
-session_start();
 $title = 'Ошибка 500! Внутренняя ошибка сервер.';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/pages/core/header.php');
 ?>

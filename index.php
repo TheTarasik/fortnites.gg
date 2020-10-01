@@ -1,7 +1,9 @@
 <?php
 define('security', TRUE);
+session_name('_userSID');
 session_start();
 function getpage() {
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/data/config.php');
     $request = $_REQUEST['page'];
     $url = 'kernel/pages/';
     if (isset($request) && !empty($request)) {

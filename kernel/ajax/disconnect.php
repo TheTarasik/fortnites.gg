@@ -1,12 +1,12 @@
 ﻿<?php
+if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest' || strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']) < 1) die ();
+require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/data/dbconfig.php');
 
-$host = "127.0.0.1"; // HOST
-$database = "fortnite"; // THE NAME OF DATABASE
-$user = "mysql"; // USERNAME
-$password = "mysql"; // PASSWORD
+function protectsqlinj($connect, $value) {
+    return mysqli_real_escape_string($connect, $value);
+}
 
-$connect = mysqli_connect($host, $user, $password, $database);
-$token = $_COOKIE['token'];
+$token = protectsqlinj($connect, $_COOKIE['token']);
 
 $get_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `token`='" . $token  . "'");
 while ($get_user_result = mysqli_fetch_assoc($get_user)) {

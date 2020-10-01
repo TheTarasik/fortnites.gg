@@ -1,8 +1,8 @@
 <?php
+session_name('_userSID');
 session_start();
 $title = 'Lobby';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/pages/core/header.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/kernel/data/dbconfig.php');
 
 if (!(isset($_SESSION['logged']))) {
     header("Location: /?page=login");
@@ -16,9 +16,14 @@ if (!(isset($_SESSION['logged']))) {
         $password = $get_user_result['password'];
         $user_group = $get_user_result['user_group'];
         $ip = $get_user_result['ip'];
+        $token = $get_user_result['token'];
+        $user_money = $get_user_result['money'];
     }
 }
 
+setcookie("token", $token, time()+60*60*24, '/');
+
+// Redirect user to room if him exist in room
 $get_isset_joiner_redirect = mysqli_query($connect, "SELECT * FROM `joiner` WHERE `id`='" . $id . "'");
 while ($get_isset_joiner_redirect_result = mysqli_fetch_assoc($get_isset_joiner_redirect)) {
     $get_joiner_room = $get_isset_joiner_redirect_result['id_room'];
@@ -29,8 +34,18 @@ if ($get_isset_joiner_redirect_num_result == 1) {
     header('Location: /game/room.php?id=' . $get_joiner_room . '');
 }
 
+// Prohibit the user click button "create room" many times
+$get_room_isset_query = mysqli_query($connect, "SELECT `id` FROM `rooms` WHERE `id`='" . $id . "'");
+$get_room_isset = mysqli_num_rows($get_room_isset_query);
+if ($get_room_isset == 1) {
+    header('Location: /game/room.php?id=' . $get_joiner_room . '');
+    die();
+}
 ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<div class="message-wrapper">
+    <div id="message"></div>
+</div>
     <section class="lobby">
         <div class="container">
             <div class="lobby-wrapper">
@@ -199,18 +214,26 @@ if ($get_isset_joiner_redirect_num_result == 1) {
                                     }
 
                                     if ($hash_match_correct == true) {
-                                        setcookie("ray_id", $hash_match, time() + 60 * 60 * 24 * 30 * 12);
+                                        setcookie("ray_id", $hash_match, time() + 60 * 60 * 24, '/');
                                         if (isset($_POST['bet-custom__radio'])) {
                                             $_POST['bet'] = $_POST['bet-custom__input'];
                                         }
 
-                                        $create_room = mysqli_query($connect, "INSERT INTO `rooms` (`id_room`, `id`, `bet`, `duration`, `id_match`, `hash`) VALUE (NULL, '" . $id . "', '" . $_POST['bet'] . "', '" . $_POST['duration'] . "', '" . $_POST['type_match'] . "', '" . $hash_match . "')");
+                                        if ($user_money >= $_POST['bet']) {
+                                        $today = date("Y-m-d H:i:s");
+                                        $date_expiry = strtotime($today) + $auto_delete_room;
+                                        $create_room = mysqli_query($connect, "INSERT INTO `rooms` (`id_room`, `id`, `bet`, `duration`, `id_match`, `hash`, `date`, `date_expiry`) VALUE (NULL, '" . $id . "', '" . $_POST['bet'] . "', '" . $_POST['duration'] . "', '" . $_POST['type_match'] . "', '" . $hash_match . "', '" . $today . "', '" . date("Y-m-d H:i:s", $date_expiry) . "')");
                                         $get_match_id = mysqli_query($connect, "SELECT * FROM `rooms` WHERE `hash`='" . $hash_match . "'");
+
                                         while ($get_match_id_results = mysqli_fetch_assoc($get_match_id)) {
                                             $id_room = $get_match_id_results['id_room'];
                                         }
-                                        $insert_joiner = mysqli_query($connect, "INSERT INTO `joiner` (`id_room`, `id`) VALUES ('" . $id_room . "', '" . $id . "')");
-                                        header('Location: /game/room.php?id=' . $id_room . '');
+                                            // Update user money get status
+                                            $money_get_status_update = mysqli_query($connect, "UPDATE `users` SET `money_get_status`='0' WHERE `id`='" . $id . "'");
+
+                                            $insert_joiner = mysqli_query($connect, "INSERT INTO `joiner` (`id_room`, `id`) VALUES ('" . $id_room . "', '" . $id . "')");
+                                            header('Location: /game/room.php?id=' . $id_room . '');
+                                        } // Check user money, if user don't have enough money - don't connect him to room
                                     } // HASH ISSET
 
                                 } else {
