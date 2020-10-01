@@ -18,6 +18,8 @@ if (!(isset($_SESSION['logged']))) {
         $user_group = $get_user_result['user_group'];
         $ip = $get_user_result['ip'];
         $token = $get_user_result['token'];
+        $user_money = $get_user_result['money'];
+        $money_get_status = $get_user_result['money_get_status'];
     }
 }
 
@@ -44,6 +46,7 @@ if ($check_isset_room == 0) { // If room does not exist
 $get_info_room = mysqli_query($connect, "SELECT * FROM `rooms` WHERE `id_room`='" . $id_room . "'");
 while ($get_info_room_result = mysqli_fetch_assoc($get_info_room)) {
     $info_id = $get_info_room_result['id'];
+    $bet = $get_info_room_result['bet'];
     $info_id_match = $get_info_room_result['id_match'];
     $date_expiry = $get_info_room_result['date_expiry'];
 }
@@ -84,12 +87,148 @@ if ($select_isset_data == 1) { // If user try connect to different room.
 //echo $get_joiner_round_result;
 
 if (isset($_POST['left-room'])) {
-    $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $id . "'");
-    if ($id == $info_id) {
-        $delete_room = mysqli_query($connect, "DELETE FROM `rooms` WHERE `id`='" . $id . "'");
-        $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id_room`='" . $id_room . "'");
+
+
+    // Get creator of room
+    $get_creator_of_room_query = mysqli_query($connect, "SELECT `id` FROM `rooms` WHERE `id_room`='" . $id_room . "'");
+    while ($get_creator_of_room_result = mysqli_fetch_assoc($get_creator_of_room_query)) {
+        $get_creator_of_room = $get_creator_of_room_result['id'];
     }
-    header('Location: /game/lobby.php');
+
+    // Get creator ready status
+    $get_creator_ready_status_query = mysqli_query($connect, "SELECT `ready` FROM `joiner` WHERE `id`='" . $get_creator_of_room . "'");
+    while ($get_creator_ready_status_result = mysqli_fetch_assoc($get_creator_ready_status_query)) {
+        $get_creator_ready_status = $get_creator_ready_status_result['ready'];
+    }
+
+    // Get user who ready
+    $get_user_who_ready_query = mysqli_query($connect, "SELECT `id` FROM `joiner` WHERE `ready`='1' AND `id_room`='" . $id_room . "'");
+    while ($get_user_who_ready_result = mysqli_fetch_assoc($get_user_who_ready_query)) {
+        $get_user_who_ready = $get_user_who_ready_result['id'];
+    }
+
+
+    // Get enemy from joiner
+    $get_enemy_query = mysqli_query($connect, "SELECT * FROM `joiner` WHERE `id` NOT LIKE '" . $get_creator_of_room . "' AND `id_room`='" . $id_room ."'");
+    while ($get_enemy_result = mysqli_fetch_assoc($get_enemy_query)) {
+        $get_enemy = $get_enemy_result['id'];
+        $get_enemy_ready_status = $get_enemy_result['ready'];
+    }
+
+    // Get enemy from users
+    $get_enemy_from_users_query = mysqli_query($connect, "SELECT * FROM `users` WHERE `id`='" . $get_enemy . "'");
+    while ($get_enemy_from_users_result = mysqli_fetch_assoc($get_enemy_from_users_query)) {
+        $get_enemy_money = $get_enemy_from_users_result['money'];
+    }
+
+    // Money get status enemy
+    $money_get_status_enemy_query = mysqli_query($connect, "SELECT `money_get_status` FROM `users` WHERE `id`='" . $get_enemy . "'");
+    while ($money_get_status_enemy_result = mysqli_fetch_assoc($money_get_status_enemy_query)) {
+        $money_get_status_enemy = $money_get_status_enemy_result['money_get_status'];
+    }
+
+    // Get all ready status
+    $get_all_ready_status_query = mysqli_query($connect, "SELECT `ready` FROM `joiner` WHERE `ready` NOT LIKE '0' AND `id_room`='" . $id_room . "'");
+    $get_all_ready_status = mysqli_num_rows($get_all_ready_status_query);
+
+    if ($get_all_ready_status != 2) {
+
+        if ($id == $get_creator_of_room) {
+            // Creator
+            if ($get_creator_ready_status == 1) {
+                $wait_balance = $user_money + $bet; // Generate new balance
+                if ($money_get_status == 0) {
+                    $return_balance = mysqli_query($connect, "UPDATE `users` SET `money`='" . $wait_balance . "' WHERE `id`='" . $get_creator_of_room . "'");
+                    $money_get_status_update = mysqli_query($connect, "UPDATE `users` SET `money_get_status`='1' WHERE `id`='" . $get_creator_of_room . "'");
+                }
+            }
+
+            if ($get_enemy_ready_status == 1) {
+                $enemy_wait_balance = $get_enemy_money + $bet; // Generate new balance
+                if ($money_get_status_enemy == 0) {
+                    $money_get_status_update = mysqli_query($connect, "UPDATE `users` SET `money_get_status`='1' WHERE `id`='" . $get_enemy . "'");
+                    $return_balance = mysqli_query($connect, "UPDATE `users` SET `money`='" . $enemy_wait_balance . "' WHERE `id`='" . $get_enemy . "'");
+                }
+            }
+
+            $delete_room = mysqli_query($connect, "DELETE FROM `rooms` WHERE `id`='" . $get_creator_of_room . "'");
+            $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id_room`='" . $id_room . "'");
+
+        }
+
+
+        if ($id == $get_enemy) {
+            // Not creator
+            if ($get_enemy_ready_status == 1) {
+                $enemy_wait_balance = $get_enemy_money + $bet; // Generate new balance
+                if ($money_get_status_enemy == 0) {
+                    $money_get_status_update = mysqli_query($connect, "UPDATE `users` SET `money_get_status`='1' WHERE `id`='" . $get_enemy . "'");
+                    $return_balance = mysqli_query($connect, "UPDATE `users` SET `money`='" . $enemy_wait_balance . "' WHERE `id`='" . $get_enemy . "'");
+                }
+            }
+
+            $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $get_enemy . "'");
+
+        }
+
+    } else {
+
+        if ($get_all_ready_status == 2) {
+            if ($id == $get_creator_of_room) {
+                // Creator
+
+                if ($get_enemy_ready_status == 1) {
+                    $enemy_wait_balance = $get_enemy_money + ($bet * 2) ; // Generate new balance
+                    if ($money_get_status_enemy == 0) {
+                        $money_get_status_update = mysqli_query($connect, "UPDATE `users` SET `money_get_status`='1' WHERE `id`='" . $get_enemy . "'");
+                        $return_balance = mysqli_query($connect, "UPDATE `users` SET `money`='" . $enemy_wait_balance . "' WHERE `id`='" . $get_enemy . "'");
+                    }
+                }
+
+                $delete_room = mysqli_query($connect, "DELETE FROM `rooms` WHERE `id`='" . $get_creator_of_room . "'");
+                $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id_room`='" . $id_room . "'");
+
+            }
+
+            if ($id == $get_enemy) {
+                // Not creator
+                $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $get_enemy . "'");
+            }
+        }
+    } // get all ready status == 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id`='" . $id . "'");
+//    if ($id == $info_id) {
+//        $delete_room = mysqli_query($connect, "DELETE FROM `rooms` WHERE `id`='" . $id . "'");
+//        $user_left_query = mysqli_query($connect, "DELETE FROM `joiner` WHERE `id_room`='" . $id_room . "'");
+//    }
+//    header('Location: /game/lobby.php');
 }
 
 ?>
@@ -171,7 +310,7 @@ if (isset($_POST['left-room'])) {
 <div class="modal-wrapper leave">
     <div class="modal modal-mini">
         <div class="modal-navbar">
-            <h3>Вы уверенны что хотите выйти из комнаты?</h3>
+            <h3>Вы уверены что хотите выйти из комнаты?</h3>
         </div>
 
         <div class="modal-content">

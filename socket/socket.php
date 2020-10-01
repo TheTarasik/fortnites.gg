@@ -195,7 +195,7 @@ class Chat implements MessageComponentInterface {
                             // Creator
 
                             if ($get_enemy_ready_status == 1) {
-                                $enemy_wait_balance = $get_enemy_money + $bet; // Generate new balance
+                                $enemy_wait_balance = $get_enemy_money + ($bet * 2); // Generate new balance
                                 if ($money_get_status_enemy == 0) {
                                     $money_get_status_update = mysqli_query($connect, "UPDATE `users` SET `money_get_status`='1' WHERE `id`='" . $get_enemy . "'");
                                     $return_balance = mysqli_query($connect, "UPDATE `users` SET `money`='" . $enemy_wait_balance . "' WHERE `id`='" . $get_enemy . "'");
