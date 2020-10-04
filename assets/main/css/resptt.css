@@ -261,6 +261,7 @@ right: 25px;
     display: flex;
     flex-direction: column;
     position: absolute;
+    right: 0;
     bottom: 0;
 }
 
@@ -320,15 +321,23 @@ a.room-join {
     overflow-y: auto;
     -ms-word-break: break-all;
     word-break: break-all;
+    padding: 0 10px 0 10px;
 }
 
 .chat-message__wrapper {
     display: flex;
+    margin: 0 0 10px 0;
+}
+
+.userpic-wrapper {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
 }
 
 .chat-message__userpic img {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
 }
 
@@ -338,6 +347,29 @@ a.room-join {
     padding: 0;
 }
 
+.chat-message__wrapper.incoming {
+    justify-content: flex-end;
+}
+
+.chat-message__wrapper.incoming .chat-message__userpic, .chat-message__login {
+    display: none;
+}
+
+.chat-message__message {
+    border-radius: 22px;
+    width: auto;
+    padding: 12px;
+    max-width: 236px;
+    min-height: 44px;
+    background-color: #fff;
+    border: 1px solid #efefef;
+}
+
+.chat-message__wrapper.incoming .chat-message__message {
+    background-color: #efefef;
+}
+
+/* Room-chat */
 .room-chat__message-send {
     position: absolute;
     bottom: 0;

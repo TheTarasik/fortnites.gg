@@ -11,5 +11,5 @@ $match_duration = 25;
 // Time to auto delete room in second's
 $auto_delete_room = 43200; // 12 hour's
 // Timer in room
-$mini_countdown = 1043543; // 300 second's - 5 minuts
+$mini_countdown = 343500; // 300 second's - 5 minuts
 ?>

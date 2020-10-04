@@ -235,6 +235,7 @@ class Chat implements MessageComponentInterface {
         $chat_sender = array (
             "room_id" => $data['room_id'],
             "login" => $login,
+            "user_id" => $data['user_id'],
             "action" => $data['action'],
             "msg" => $data['msg'],
             "token" => $data['token']
@@ -261,8 +262,7 @@ class Chat implements MessageComponentInterface {
             "room_id" => $data['room_id'],
             "user_id" => $data['user_id'],
             "action" => $data['action'],
-            "token" => $data['token'],
-            "test" => $get_all_ready_status
+            "token" => $data['token']
         );
 
 //        $other = array(

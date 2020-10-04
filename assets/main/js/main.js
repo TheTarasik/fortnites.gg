@@ -1,6 +1,10 @@
 $(document).ready(function () {
     // Message
+    $.cookie('message', '1', { expires: 365 * 10, path: '/' });
 
+    $('#message-alarm').on('click', function () {
+        $.cookie('message', '0', { expires: 365 * 10, path: '/' });
+    });
 
     // Modal
     $('.modal-show').on('click', function () {

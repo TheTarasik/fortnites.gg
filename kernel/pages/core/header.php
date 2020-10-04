@@ -26,6 +26,8 @@ setcookie("XSRF_TOKEN", $token_generate, time() + 60 * 60 * 24, '/');
     <link rel="apple-touch-icon-precomposed" href="<? echo $theme ?>/images/favicon.ico" />
 
     <link rel="stylesheet" href="<? echo $theme ?>/css/resptt.css">
+
+    <script src="<? echo $theme ?>/js/misc.js"></script>
 </head>
 <body>
 

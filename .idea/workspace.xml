@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/game/lobby.php" line="225" mnemonic="8" />
+    <bookmark url="file://$PROJECT_DIR$/game/lobby.php" line="226" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54027e31-dc59-45c3-b75f-bbda9e4e0626" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/main/js/misc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/main/css/resptt.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/main/css/resptt.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/main/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/main/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/lobby.php" beforeDir="false" afterPath="$PROJECT_DIR$/game/lobby.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/room.php" beforeDir="false" afterPath="$PROJECT_DIR$/game/room.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/data/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/data/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/pages/core/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/pages/core/header.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/socket/socket.php" beforeDir="false" afterPath="$PROJECT_DIR$/socket/socket.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,8 +46,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/room.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="190" column="16" selection-start-line="190" selection-start-column="16" selection-end-line="193" selection-end-column="17" />
+            <state relative-caret-position="480">
+              <caret line="392" column="28" lean-forward="true" selection-start-line="392" selection-start-column="28" selection-end-line="392" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -48,8 +55,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/socket/socket.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="215" column="28" lean-forward="true" selection-start-line="215" selection-start-column="28" selection-end-line="215" selection-end-column="28" />
+            <state relative-caret-position="360">
+              <caret line="243" lean-forward="true" selection-start-line="243" selection-end-line="243" />
               <folding>
                 <element signature="e#38#66#0#PHP" expanded="true" />
               </folding>
@@ -57,21 +64,44 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/kernel/pages/core/header.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/main/js/misc.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="24">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/main/css/resptt.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="410">
+              <caret line="357" column="24" lean-forward="true" selection-start-line="357" selection-start-column="24" selection-end-line="357" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>msg</find>
-      <find>chat_send</find>
-      <find>cook</find>
-      <find>coo</find>
-      <find>cookie</find>
-      <find>Подождит</find>
-      <find>stats</find>
-      <find>timer</find>
-      <find>left</find>
-      <find>let</find>
-      <find>status</find>
       <find>$insert_joiner</find>
       <find>bet</find>
       <find>ready</find>
@@ -91,6 +121,17 @@
       <find>money_get_</find>
       <find>money_get_status</find>
       <find>($bet * 2)</find>
+      <find>leave</find>
+      <find>message</find>
+      <find>до 3</find>
+      <find>chat_sender</find>
+      <find>.chat-message__wrapper</find>
+      <find>.chat-wra</find>
+      <find>incomm</find>
+      <find>chat-message__wrap</find>
+      <find>chat-message__use</find>
+      <find>chat</find>
+      <find>&quot;chat</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -108,7 +149,6 @@
         <option value="$PROJECT_DIR$/kernel/pages/core/footer.php" />
         <option value="$PROJECT_DIR$/kernel/ajax/joiners.php" />
         <option value="$PROJECT_DIR$/kernel/ajax/get_joiners.php" />
-        <option value="$PROJECT_DIR$/assets/main/js/room.js" />
         <option value="$PROJECT_DIR$/assets/main/js/lobby.js" />
         <option value="$PROJECT_DIR$/kernel/pages/profile.php" />
         <option value="$PROJECT_DIR$/kernel/data/dbconfig.php" />
@@ -118,18 +158,20 @@
         <option value="$PROJECT_DIR$/kernel/pages/errors/403.php" />
         <option value="$PROJECT_DIR$/kernel/pages/errors/404.php" />
         <option value="$PROJECT_DIR$/kernel/pages/errors/500.php" />
-        <option value="$PROJECT_DIR$/kernel/pages/core/header.php" />
         <option value="$PROJECT_DIR$/kernel/pages/registration.php" />
         <option value="$PROJECT_DIR$/kernel/ajax/get_rooms.php" />
         <option value="$PROJECT_DIR$/kernel/ajax/disconnect.php" />
         <option value="$PROJECT_DIR$/kernel/ajax/timer.php" />
         <option value="$PROJECT_DIR$/kernel/ajax/countdown.php" />
         <option value="$PROJECT_DIR$/kernel/ajax/room_join.php" />
-        <option value="$PROJECT_DIR$/assets/main/js/main.js" />
-        <option value="$PROJECT_DIR$/assets/main/css/resptt.css" />
         <option value="$PROJECT_DIR$/kernel/ajax/stats.php" />
-        <option value="$PROJECT_DIR$/kernel/data/config.php" />
         <option value="$PROJECT_DIR$/game/lobby.php" />
+        <option value="$PROJECT_DIR$/kernel/data/config.php" />
+        <option value="$PROJECT_DIR$/assets/main/js/room.js" />
+        <option value="$PROJECT_DIR$/assets/main/js/main.js" />
+        <option value="$PROJECT_DIR$/kernel/pages/core/header.php" />
+        <option value="$PROJECT_DIR$/assets/main/js/misc.js" />
+        <option value="$PROJECT_DIR$/assets/main/css/resptt.css" />
         <option value="$PROJECT_DIR$/game/room.php" />
         <option value="$PROJECT_DIR$/socket/socket.php" />
       </list>
@@ -169,6 +211,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -252,7 +295,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -321,18 +363,21 @@
       <workItem from="1601316166873" duration="14118000" />
       <workItem from="1601372665353" duration="595000" />
       <workItem from="1601479788106" duration="20938000" />
-      <workItem from="1601560190589" duration="17457000" />
+      <workItem from="1601560190589" duration="17690000" />
+      <workItem from="1601647687753" duration="2341000" />
+      <workItem from="1601733621948" duration="16066000" />
+      <workItem from="1601813443676" duration="800000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="441190000" />
+    <option name="totallyTimeSpent" value="460630000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17352185" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17930591" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -393,13 +438,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/main/js/lobby.php" />
     <entry file="file://$PROJECT_DIR$/kernel/ajax/get_joiners.php" />
-    <entry file="file://$PROJECT_DIR$/assets/main/js/room.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="31" selection-start-column="31" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/main/js/lobby.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
@@ -480,13 +518,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/kernel/pages/core/header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="12" column="67" selection-start-line="12" selection-start-column="67" selection-end-line="12" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/kernel/pages/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-850">
@@ -529,38 +560,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/main/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kernel/data/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/kernel/ajax/room_join.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="335">
           <caret line="69" column="137" lean-forward="true" selection-start-line="68" selection-start-column="8" selection-end-line="69" selection-end-column="137" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/lobby.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="229" column="41" lean-forward="true" selection-start-line="229" selection-start-column="41" selection-end-line="229" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/main/css/resptt.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5896">
-          <caret line="224" selection-start-line="224" selection-end-line="224" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -576,17 +579,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/kernel/data/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/main/js/room.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="31" selection-start-column="31" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/main/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/lobby.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6">
+          <caret line="222" column="24" selection-start-line="222" selection-start-column="24" selection-end-line="222" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/main/css/resptt.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="357" column="24" lean-forward="true" selection-start-line="357" selection-start-column="24" selection-end-line="357" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/main/js/misc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kernel/pages/core/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/game/room.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="190" column="16" selection-start-line="190" selection-start-column="16" selection-end-line="193" selection-end-column="17" />
+        <state relative-caret-position="480">
+          <caret line="392" column="28" lean-forward="true" selection-start-line="392" selection-start-column="28" selection-end-line="392" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/socket/socket.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="215" column="28" lean-forward="true" selection-start-line="215" selection-start-column="28" selection-end-line="215" selection-end-column="28" />
+        <state relative-caret-position="360">
+          <caret line="243" lean-forward="true" selection-start-line="243" selection-end-line="243" />
           <folding>
             <element signature="e#38#66#0#PHP" expanded="true" />
           </folding>

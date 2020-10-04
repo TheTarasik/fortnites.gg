@@ -121,16 +121,17 @@ if ($get_room_isset == 1) {
 
                                 Длительность матча
                                 <select name="duration">
-                                    <option value="3">До 3</option>
-                                    <option value="5">До 5</option>
-                                    <option value="7">До 7</option>
-                                    <option value="10">До 10</option>
+                                    <option value="3">До 3 побед</option>
+                                    <option value="5">До 5 побед</option>
+                                    <option value="7">До 7 побед</option>
+                                    <option value="10">До 10 побед</option>
                                 </select>
 
                                 Тип игры
                                 <select name="type_match">
                                     <option value="1">Box fight</option>
-                                    <option value="2">3x3 BoxFight</option>
+                                    <option value="2">2x2 BoxFight</option>
+                                    <option value="3">3x3 BoxFight</option>
                                 </select>
 
                                 <button type="submit" name="lobby-create__submit">Создать лобби</button>
