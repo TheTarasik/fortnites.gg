@@ -1,9 +1,11 @@
 $(document).ready(function () {
     // Message
-    $.cookie('message', '1', { expires: 365 * 10, path: '/' });
+    //$.cookie('message', '1', { expires: 365 * 10, path: '/' });
+    localStorage.setItem('message_chat', 1);
 
-    $('#message-alarm').on('click', function () {
-        $.cookie('message', '0', { expires: 365 * 10, path: '/' });
+    $('#message-chat').on('click', function () {
+        //$.cookie('message', '0', { expires: 365 * 10, path: '/' });
+        localStorage.setItem('message_chat', 0);
     });
 
     // Modal

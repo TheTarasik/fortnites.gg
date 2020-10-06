@@ -238,6 +238,7 @@ class Chat implements MessageComponentInterface {
             "user_id" => $data['user_id'],
             "action" => $data['action'],
             "msg" => $data['msg'],
+            "date" => date('H:i'),
             "token" => $data['token']
         );
 

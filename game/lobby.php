@@ -105,6 +105,7 @@ if ($get_room_isset == 1) {
                             </script>
                             <br><br><br>
                             <form method="POST">
+                                <input type="hidden" name="xsrf_token" value="<? echo $token_generate ?>">
                                 <input type="radio" class="bet" name="bet" value="0">
                                 <label for="bet-0">0р.</label>
 
@@ -142,6 +143,9 @@ if ($get_room_isset == 1) {
                             $errors = array();
 
                             if (isset($_POST['lobby-create__submit'])) {
+                                if ($_COOKIE['XSRF_TOKEN'] != $_POST['xsrf_token']) {
+                                    $errors[] = 'Некорректный XSRF-TOKEN';
+                                }
 
                                 if (preg_match('/[^,.0-9]/', $_POST['bet'])) {
                                     $errors[] = 'Разве ставка может быть текстом?';

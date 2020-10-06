@@ -246,7 +246,7 @@ if (isset($_POST['left-room'])) {
 
             <div class="lobby-wrapper__item item-chat">
                 <div class="lobby-card">
-                    <div class="lobby-card__title">Chat<span id="message-alarm">оповещение</span></div>
+                    <div class="lobby-card__title">Chat<span id="message-chat"> оповещение</span></div>
                     <div class="lobby-card__content chat-height">
                         <div class="chat-wrapper">
                             <table id="chat-render" style="width: 100%;">
@@ -394,22 +394,21 @@ if (isset($_POST['left-room'])) {
 
             if (data.room_id === room_id) {
 
-                var chat_render = '<tr> <td><div class="chat-message__wrapper ' + data.user_id + '"> <div class="chat-message__wrapper-item chat-message__userpic"> <div class="userpic-wrapper"> <img src="/uploads/' + data.login + '.jpg"></div> </div>  <div class="chat-message__wrapper-item "> <div class="chat-message__login">' + data.login + '</div> <div class="chat-message__message">' + data.msg + '</div> </div>  </div> </td></tr>';
+                var chat_render = '<tr> <td><div class="chat-message__wrapper ' + data.user_id + '"> <div class="chat-message__wrapper-item chat-message__userpic"> <div class="userpic-wrapper"> <img src="/uploads/' + data.login + '.jpg"></div> </div>  <div class="chat-message__wrapper-item"> <div class="chat-message__login">' + data.login + '</div> <div class="chat-message__message">' + data.msg + '<span class="chat-message__date">' + data.date + '</span></div> </div>  </div> </td></tr>';
 
                 if (data.action === 'chat_sender') {
                     if (typeof (data.msg) != "undefined" && data.msg !== null) {
-                       // $.cookie('token', data.token, { expires: 1, path: '/' });
+                        // $.cookie('token', data.token, { expires: 1, path: '/' });
                         $('#chat-render').append(chat_render);
                         scrollchat();
                     }
-
                     if (user_id === data.user_id) {
-                        $('#chat-render td:last-child .chat-message__wrapper.' + data.user_id).addClass('incoming');
+                        $('.chat-message__wrapper.' + data.user_id).addClass('incoming');
                     } else {
-                        if ($.cookie('message') === '1')
-                            message();
+                        if (localStorage.getItem('message_chat') === '1') {
+                                message();
+                        }
                     }
-
                 }
 
                 if (data.action == 'leave' && data.token == $.cookie('token')) {

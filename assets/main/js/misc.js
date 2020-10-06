@@ -1,7 +1,8 @@
 let host = document.location.origin;
+let audio = new Audio();
+audio.canPlayType('audio/ogg; codecs="vorbis"');
 
 function message() {
-    var audio = new Audio();
     audio.src = host + '/kernel/sounds/message.ogg';
     audio.autoplay = true;
 }
